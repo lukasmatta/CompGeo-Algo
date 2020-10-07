@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../dist/svg-library.min.js"></script>
+    <title>Svg Framework example</title>
+    <style>
+      body {
+        background-color: #efefef;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Svg framework example</h1>
+    <svg id="myCanvas" width="500" height="500"></svg>
+    <script>
+      var svgPlane = new svgLibrary.Canvas("myCanvas");
+      svgPlane.setBackgroundColor("pink");
+      svgPlane.addPoint(5, 5, "black");
+      svgPlane.addPoint(60, 60, "black");
+      svgPlane.addPoint(400, 400, "black");
+    </script>
+  </body>
+</html>
