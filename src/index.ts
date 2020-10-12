@@ -1,3 +1,4 @@
 import { Canvas } from "./Canvas";
-const svgLibrary = { Canvas };
+import { ConvexHull } from "./ConvexHull";
+const svgLibrary = { Canvas, ConvexHull };
 export default svgLibrary;

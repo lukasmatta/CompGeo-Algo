@@ -4,8 +4,8 @@ interface Point {
   color: string;
 }
 
-type SvgInHtml = HTMLElement & SVGElement;
-type SvgCircle = HTMLElement & SVGCircleElement;
+export type SvgInHtml = HTMLElement & SVGElement;
+export type SvgCircle = HTMLElement & SVGCircleElement;
 
 const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
@@ -21,6 +21,13 @@ export class Canvas {
     this.canvas.addEventListener("mouseup", this.endDrag.bind(this));
     this.canvas.addEventListener("mouseleave", this.endDrag.bind(this));
     this.canvas.addEventListener("dblclick", this.addPointOnClick.bind(this));
+  }
+
+  /**
+   * Returns points in canvas
+   */
+  public getPoints(): SvgCircle[] {
+    return this.points;
   }
 
   /**

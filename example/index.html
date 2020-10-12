@@ -17,9 +17,19 @@
     <script>
       var svgPlane = new svgLibrary.Canvas("myCanvas");
       svgPlane.setBackgroundColor("pink");
-      svgPlane.addPoint(5, 5, "black");
-      svgPlane.addPoint(60, 60, "black");
       svgPlane.addPoint(400, 400, "black");
+      svgPlane.addPoint(100, 150, "black");
+      svgPlane.addPoint(150, 100, "black");
+
+      svgPlane.addPoint(200, 150, "black");
+      svgPlane.addPoint(34, 322, "black");
+
+      var convexHull = new svgLibrary.ConvexHull();
+
+      function createConvexHull() {
+        convexHull.createConvexHull(svgPlane.getPoints());
+      }
     </script>
+    <button onclick="createConvexHull()">Create ConvexHull</button>
   </body>
 </html>
