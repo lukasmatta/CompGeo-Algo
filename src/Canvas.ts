@@ -31,6 +31,13 @@ export class Canvas {
   }
 
   /**
+   * Returns svg canvas
+   */
+  public getCanvas(): SvgInHtml {
+    return this.canvas;
+  }
+
+  /**
    * Adds point to canvas
    * @param x x coordinate
    * @param y y coordinate
@@ -40,7 +47,7 @@ export class Canvas {
     const circle: SvgCircle = <SvgCircle>document.createElementNS(SVG_NAMESPACE, "circle");
     circle.setAttributeNS(null, "cx", x.toString());
     circle.setAttributeNS(null, "cy", y.toString());
-    circle.setAttributeNS(null, "r", "5");
+    circle.setAttributeNS(null, "r", "3");
     circle.setAttributeNS(
       null,
       "style",

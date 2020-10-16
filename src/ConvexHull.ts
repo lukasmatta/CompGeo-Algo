@@ -1,13 +1,19 @@
-import { SvgCircle } from "./Canvas";
+import { SvgCircle, SvgInHtml, Canvas } from "./Canvas";
 
 export class ConvexHull {
-  constructor() {}
+  canvas: Canvas;
+
+  constructor(canvas: Canvas) {
+    this.canvas = canvas;
+  }
 
   /**
    * Creates convex hull and paints convex hull points with green color
    * @param points array of points
    */
-  public createConvexHull(points: SvgCircle[]): SvgCircle[] {
+  public createConvexHull(): void {
+    this.removeLines();
+    const points = this.canvas.getPoints();
     console.log("points", points);
     const convexHull: SvgCircle[] = [];
     let leftmostPoint: SvgCircle = points[0];
@@ -23,7 +29,7 @@ export class ConvexHull {
     let endpoint: SvgCircle;
     let i = 0;
     do {
-      pointOnHull.style.fill = "green";
+      // pointOnHull.style.fill = "green";
       convexHull.push(pointOnHull);
       endpoint = points[0];
 
@@ -32,10 +38,14 @@ export class ConvexHull {
           endpoint = points[j];
         }
       }
+      if (endpoint) {
+        this.makeLine(endpoint, pointOnHull);
+      }
       pointOnHull = endpoint;
       i++;
     } while (!this.isPointEqual(endpoint, convexHull[0]) && i < 50);
-    return convexHull;
+    console.log(convexHull.length);
+    // return convexHull;
   }
 
   /**
@@ -54,6 +64,11 @@ export class ConvexHull {
     return d < 0;
   }
 
+  /**
+   * Detects if points are equal. Points are equal if their coordinates are equal
+   * @param pointA first point
+   * @param pointB second point
+   */
   private isPointEqual(pointA: SvgCircle, pointB: SvgCircle) {
     if (
       Number(pointA.getAttribute("cx")) === Number(pointB.getAttribute("cx")) &&
@@ -62,5 +77,35 @@ export class ConvexHull {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Remove all lines which represents convex hull
+   */
+  private removeLines() {
+    const canvas = this.canvas.getCanvas();
+    let currentLines = canvas.getElementsByClassName("line");
+    let currentLinesArray = Array.from(currentLines);
+    currentLinesArray.forEach((line) => line.remove());
+  }
+
+  /**
+   * Add line going from first to second point on canvas
+   * @param pointA first point
+   * @param pointB second point
+   */
+  private makeLine(pointA: SvgCircle, pointB: SvgCircle, id?: string) {
+    var newLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    if (id) {
+      newLine.setAttribute("class", "id");
+    }
+    newLine.setAttribute("class", "line");
+    newLine.setAttribute("x1", pointA.getAttribute("cx"));
+    newLine.setAttribute("y1", pointA.getAttribute("cy"));
+    newLine.setAttribute("x2", pointB.getAttribute("cx"));
+    newLine.setAttribute("y2", pointB.getAttribute("cy"));
+    newLine.setAttribute("stroke", "black");
+    const canvas = this.canvas.getCanvas();
+    canvas.appendChild(newLine);
   }
 }
