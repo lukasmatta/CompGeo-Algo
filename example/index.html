@@ -4,32 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="../dist/svg-library.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <title>Svg Framework example</title>
-    <style>
-      body {
-        background-color: #efefef;
-      }
-    </style>
+    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
   </head>
   <body>
-    <h1>Svg framework example</h1>
-    <svg id="myCanvas" width="500" height="500"></svg>
+    <h1>Svg Library example</h1>
+    <svg id="myCanvas" width="700" height="400"></svg>
+    <p class="hint">(double click to create a vertex)</p>
+    <div class="buttons">
+      <button class="waves-effect waves-light btn" onclick="createConvexHull()">Create Convex Hull</button>
+    </div>
     <script>
       var svgPlane = new svgLibrary.Canvas("myCanvas");
       svgPlane.setBackgroundColor("pink");
-      svgPlane.addPoint(400, 400, "black");
       svgPlane.addPoint(100, 150, "black");
-      svgPlane.addPoint(150, 100, "black");
+      svgPlane.addPoint(600, 150, "black");
+      svgPlane.addPoint(350, 322, "black");
+      svgPlane.addPoint(350, 50, "black");
+      svgPlane.addPoint(350, 200, "black");
 
-      svgPlane.addPoint(200, 150, "black");
-      svgPlane.addPoint(34, 322, "black");
-
-      var convexHull = new svgLibrary.ConvexHull();
+      var convexHull = new svgLibrary.ConvexHull(svgPlane);
 
       function createConvexHull() {
         convexHull.createConvexHull(svgPlane.getPoints());
       }
     </script>
-    <button onclick="createConvexHull()">Create ConvexHull</button>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
   </body>
 </html>
