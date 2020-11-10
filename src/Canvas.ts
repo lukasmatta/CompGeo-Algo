@@ -7,7 +7,7 @@ interface Point {
 export type SvgInHtml = HTMLElement & SVGElement;
 export type SvgCircle = HTMLElement & SVGCircleElement;
 
-const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+export const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
 export class Canvas {
   private points: SvgCircle[] = [];
@@ -106,5 +106,30 @@ export class Canvas {
       this.draggingObject.style.fill = "black";
       this.draggingObject = null;
     }
+  }
+
+  /**
+   * Remove all lines from canvas
+   */
+  public removeLines() {
+    let currentLines = this.canvas.getElementsByClassName("line");
+    let currentLinesArray = Array.from(currentLines);
+    currentLinesArray.forEach((line) => line.remove());
+  }
+
+  /**
+   * Remove all points from canvas
+   */
+  public removePoints() {
+    this.points.forEach((p) => p.remove());
+    this.points = [];
+  }
+
+  /**
+   * Remove lines and points from canvas
+   */
+  public clearCanvas() {
+    this.removeLines();
+    this.removePoints();
   }
 }

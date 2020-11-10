@@ -4,16 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="../dist/svg-library.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <title>Svg Framework example</title>
-    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <title>Computational Geometry Project</title>
+    <link type="text/css" rel="stylesheet" href="css/main.css" media="screen,projection" />
   </head>
   <body>
-    <h1>Svg Library example</h1>
+    <h1>Computational Geometry Project</h1>
     <svg id="myCanvas" width="700" height="400"></svg>
     <p class="hint">(double click to create a vertex)</p>
     <div class="buttons">
-      <button class="waves-effect waves-light btn" onclick="createConvexHull()">Create Convex Hull</button>
+      <button class="waves-effect waves-light btn" onclick="JarvisMarch()">
+        Use Jarvis March (Gift Wrapping) algorithm
+      </button>
+      <button class="waves-effect waves-light btn" onclick="GrahamScan()">Use Graham Scan algorithm</button>
+      <button class="waves-effect waves-light btn" onclick="ClearCanvas()">Clear canvas</button>
     </div>
     <script>
       var svgPlane = new svgLibrary.Canvas("myCanvas");
@@ -23,11 +27,44 @@
       svgPlane.addPoint(350, 322, "black");
       svgPlane.addPoint(350, 50, "black");
       svgPlane.addPoint(350, 200, "black");
+      svgPlane.addPoint(469, 252, "black");
+      svgPlane.addPoint(214, 283, "black");
+      svgPlane.addPoint(163, 223, "black");
+      svgPlane.addPoint(189, 137, "black");
+      svgPlane.addPoint(175, 74, "black");
+      svgPlane.addPoint(273, 43, "black");
+      svgPlane.addPoint(290, 101, "black");
+      svgPlane.addPoint(297, 189, "black");
+      svgPlane.addPoint(279, 288, "black");
+      svgPlane.addPoint(121, 303, "black");
+      svgPlane.addPoint(44, 263, "black");
+      svgPlane.addPoint(236, 347, "black");
+      svgPlane.addPoint(453, 347, "black");
+      svgPlane.addPoint(506, 302, "black");
+      svgPlane.addPoint(527, 210, "black");
+      svgPlane.addPoint(486, 122, "black");
+      svgPlane.addPoint(403, 159, "black");
+      svgPlane.addPoint(388, 131, "black");
+      svgPlane.addPoint(481, 181, "black");
+      svgPlane.addPoint(554, 72, "black");
+      svgPlane.addPoint(423, 47, "black");
+      svgPlane.addPoint(431, 77, "black");
+      svgPlane.addPoint(386, 262, "black");
+      svgPlane.addPoint(322, 272, "black");
+      svgPlane.addPoint(240, 172, "black");
 
       var convexHull = new svgLibrary.ConvexHull(svgPlane);
 
-      function createConvexHull() {
-        convexHull.createConvexHull(svgPlane.getPoints());
+      function JarvisMarch() {
+        convexHull.JarvisMarch();
+      }
+
+      function GrahamScan() {
+        convexHull.GrahamScan();
+      }
+
+      function ClearCanvas() {
+        svgPlane.clearCanvas();
       }
     </script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
