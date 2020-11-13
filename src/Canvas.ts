@@ -6,14 +6,22 @@ interface Point {
 
 export type SvgInHtml = HTMLElement & SVGElement;
 export type SvgCircle = HTMLElement & SVGCircleElement;
+export type SvgLine = HTMLElement & SVGLineElement;
 
 export const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
+
+export interface Polygon {
+  points: SvgCircle[];
+  lines: SvgLine[];
+}
 
 export class Canvas {
   private points: SvgCircle[] = [];
   private canvas: SvgInHtml;
   private draggingObject: SvgCircle;
   private dragging = false;
+  private polygon: Polygon = { points: [], lines: [] };
+  private creatingPolygon = false;
 
   constructor(canvasId: string) {
     this.canvas = <SvgInHtml>document.getElementById(canvasId);
@@ -21,6 +29,7 @@ export class Canvas {
     this.canvas.addEventListener("mouseup", this.endDrag.bind(this));
     this.canvas.addEventListener("mouseleave", this.endDrag.bind(this));
     this.canvas.addEventListener("dblclick", this.addPointOnClick.bind(this));
+    this.canvas.addEventListener("click", this.addPolygonPoint.bind(this));
   }
 
   /**
@@ -43,7 +52,7 @@ export class Canvas {
    * @param y y coordinate
    * @param color color of point
    */
-  public addPoint(x: number, y: number, color?: string): void {
+  public addPoint(x: number, y: number, color?: string): SvgCircle {
     const circle: SvgCircle = <SvgCircle>document.createElementNS(SVG_NAMESPACE, "circle");
     circle.setAttributeNS(null, "cx", x.toString());
     circle.setAttributeNS(null, "cy", y.toString());
@@ -57,14 +66,15 @@ export class Canvas {
 
     this.points.push(circle);
     this.canvas.appendChild(circle);
+    return circle;
   }
 
   /**
    * Adds point on click
    * @param event click event
    */
-  private addPointOnClick(event: MouseEvent) {
-    this.addPoint(event.offsetX, event.offsetY);
+  private addPointOnClick(event: MouseEvent): SvgCircle {
+    return this.addPoint(event.offsetX, event.offsetY);
   }
 
   /**
@@ -131,5 +141,69 @@ export class Canvas {
   public clearCanvas() {
     this.removeLines();
     this.removePoints();
+    this.polygon = { points: [], lines: [] };
+  }
+
+  /**
+   * Adds polygon point
+   * @param event
+   */
+  private addPolygonPoint(event: MouseEvent) {
+    if (this.creatingPolygon) {
+      const point = this.addPointOnClick(event);
+      this.polygon.points.push(point);
+
+      if (this.polygon.points.length > 1) {
+        const secondLastPoint = this.polygon.points[this.polygon.points.length - 2];
+        const line = this.makeLine(point, secondLastPoint);
+        this.polygon.lines.push(line);
+      }
+
+      if (this.polygon.points.length > 2) {
+        if (this.polygon.points.length > 3) {
+          this.polygon.lines.splice(this.polygon.lines.length - 2, 1)[0].remove();
+        }
+        const firstPoint = this.polygon.points[0];
+        const line = this.makeLine(firstPoint, point);
+        this.polygon.lines.push(line);
+      }
+    }
+  }
+
+  /**
+   * Add line going from first to second point on canvas
+   * @param pointA first point
+   * @param pointB second point
+   */
+  public makeLine(pointA: SvgCircle, pointB: SvgCircle, color?: string, id?: string): SvgLine {
+    let newLine: SvgLine = <SvgLine>document.createElementNS("http://www.w3.org/2000/svg", "line");
+    if (id) {
+      newLine.setAttribute("id", id);
+    }
+    newLine.setAttribute("class", "line");
+    newLine.setAttribute("x1", pointA.getAttribute("cx"));
+    newLine.setAttribute("y1", pointA.getAttribute("cy"));
+    newLine.setAttribute("x2", pointB.getAttribute("cx"));
+    newLine.setAttribute("y2", pointB.getAttribute("cy"));
+    newLine.setAttribute("stroke", color || "black");
+    const canvas = this.canvas;
+    const line = canvas.appendChild(newLine);
+    return line;
+  }
+
+  /**
+   * Returns polygon that is on plane
+   */
+  public getPolygon(): Polygon {
+    return this.polygon;
+  }
+
+  public startCreatingPolygon(): void {
+    this.clearCanvas();
+    this.creatingPolygon = true;
+  }
+
+  public stopCreatingPolygon(): void {
+    this.creatingPolygon = false;
   }
 }

@@ -1,4 +1,5 @@
 import { Canvas } from "./Canvas";
 import { ConvexHull } from "./ConvexHull";
-const svgLibrary = { Canvas, ConvexHull };
+import { Triangulation } from "./Triangulation";
+const svgLibrary = { Canvas, ConvexHull, Triangulation };
 export default svgLibrary;

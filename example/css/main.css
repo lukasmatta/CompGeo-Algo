@@ -12,4 +12,23 @@ h1 {
 
 .hint {
     margin-top: 0;
+    -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+}
+
+.container {
+    padding: 10px 25px;
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+}
+
+.buttons button {
+    margin-bottom: 15px;
+}
+
+.buttons .heading {
+    font-weight: bold;
 }

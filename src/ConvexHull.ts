@@ -1,4 +1,5 @@
 import { SvgCircle, SvgInHtml, Canvas, SVG_NAMESPACE } from "./Canvas";
+import { Utils } from "./Utils";
 
 export class ConvexHull {
   canvas: Canvas;
@@ -35,15 +36,15 @@ export class ConvexHull {
       let currentLine: SVGLineElement;
 
       for (let j = 0; j < points.length; j++) {
-        currentLine = this.makeLine(points[j], pointOnHull, "green");
-        if (this.isPointEqual(endpoint, pointOnHull) || this.isOnLeft(pointOnHull, endpoint, points[j])) {
+        currentLine = this.canvas.makeLine(points[j], pointOnHull, "green");
+        if (this.isPointEqual(endpoint, pointOnHull) || Utils.isOnLeft(pointOnHull, endpoint, points[j])) {
           endpoint = points[j];
         }
         await this.timer(5);
         currentLine?.remove();
       }
       if (endpoint) {
-        this.makeLine(endpoint, pointOnHull, "red");
+        this.canvas.makeLine(endpoint, pointOnHull, "red");
         endpoint.style.fill = "red";
       }
       pointOnHull = endpoint;
@@ -87,20 +88,20 @@ export class ConvexHull {
     });
 
     // Sort points by the angle they and leftmost point make with x-axis
-    points.sort((a, b) => (this.isOnLeft(leftmostPoint, a, b) ? -1 : 1));
+    points.sort((a, b) => (Utils.isOnLeft(leftmostPoint, a, b) ? -1 : 1));
 
     let lines: SVGLineElement[] = [];
 
     for (let i = 0; i < points.length; i++) {
       let point = points[i];
 
-      while (stack.length > 1 && this.isOnLeft(stack[stack.length - 2], point, stack[stack.length - 1])) {
+      while (stack.length > 1 && Utils.isOnLeft(stack[stack.length - 2], point, stack[stack.length - 1])) {
         stack.pop().style.fill = "black";
         lines.pop().remove();
       }
 
       if (stack.length >= 1) {
-        lines.push(this.makeLine(stack[stack.length - 1], point, "red"));
+        lines.push(this.canvas.makeLine(stack[stack.length - 1], point, "red"));
       }
 
       stack.push(point);
@@ -109,25 +110,9 @@ export class ConvexHull {
     }
 
     // this.makeLine(stack[0], stack[stack.length - 1], "red");
-    lines.push(this.makeLine(stack[stack.length - 1], stack[0], "red"));
+    lines.push(this.canvas.makeLine(stack[stack.length - 1], stack[0], "red"));
 
     return new Promise((res) => res(stack));
-  }
-
-  /**
-   * Check if pointC is on left side of line going from pointA to pointB
-   * @param pointA First point
-   * @param pointB Second point
-   * @param pointC Point that we are checking if is on left
-   */
-  private isOnLeft(pointA: SvgCircle, pointB: SvgCircle, pointC: SvgCircle): boolean {
-    const d =
-      (Number(pointC.getAttribute("cx")) - Number(pointA.getAttribute("cx"))) *
-        (Number(pointB.getAttribute("cy")) - Number(pointA.getAttribute("cy"))) -
-      (Number(pointC.getAttribute("cy")) - Number(pointA.getAttribute("cy"))) *
-        (Number(pointB.getAttribute("cx")) - Number(pointA.getAttribute("cx")));
-
-    return d < 0;
   }
 
   /**
@@ -143,27 +128,6 @@ export class ConvexHull {
       return true;
     }
     return false;
-  }
-
-  /**
-   * Add line going from first to second point on canvas
-   * @param pointA first point
-   * @param pointB second point
-   */
-  private makeLine(pointA: SvgCircle, pointB: SvgCircle, color?: string, id?: string): SVGLineElement {
-    var newLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    if (id) {
-      newLine.setAttribute("id", id);
-    }
-    newLine.setAttribute("class", "line");
-    newLine.setAttribute("x1", pointA.getAttribute("cx"));
-    newLine.setAttribute("y1", pointA.getAttribute("cy"));
-    newLine.setAttribute("x2", pointB.getAttribute("cx"));
-    newLine.setAttribute("y2", pointB.getAttribute("cy"));
-    newLine.setAttribute("stroke", color || "black");
-    const canvas = this.canvas.getCanvas();
-    const line = canvas.appendChild(newLine);
-    return line;
   }
 
   private timer(ms) {
