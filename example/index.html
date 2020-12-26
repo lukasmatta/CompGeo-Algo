@@ -14,9 +14,13 @@
         <h1>Computational Geometry Project</h1>
         <svg id="myCanvas" width="700" height="400"></svg>
         <p class="hint"></p>
-        <button class="waves-effect waves-light btn green darken-2" onclick="$.StartPolygon()">
-          Start creating polygon
+        <button class="waves-effect waves-light btn green darken-2" onclick="$.TogglePolygon()">
+          <span id="polygon-state">Start</span> creating polygon
         </button>
+        <button class="waves-effect waves-light btn grey darken-2" onclick="$.AddRandomPoints()">
+          Add 10 random points
+        </button>
+
         <button class="waves-effect waves-light btn red darken-2" onclick="$.ClearCanvas()">Clear canvas</button>
       </div>
       <div>
@@ -30,6 +34,12 @@
             <p class="heading">Triangulation</p>
             <button class="waves-effect waves-light btn light-blue darken-2" onclick="$.SweepingLine()">
               Sweeping Line triangulation
+            </button>
+          </div>
+          <div>
+            <p class="heading">KDTree</p>
+            <button class="waves-effect waves-light btn light-blue darken-2" onclick="$.BuildKDTree()">
+              Build KDTree
             </button>
           </div>
         </div>

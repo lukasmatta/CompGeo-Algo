@@ -1,4 +1,4 @@
-interface Point {
+export interface Point {
   x: number;
   y: number;
   color: string;
@@ -192,6 +192,27 @@ export class Canvas {
   }
 
   /**
+   * Add line going from first to second point on canvas
+   * @param pointA first point
+   * @param pointB second point
+   */
+  public makeLinePoints(pointA: Point, pointB: Point, color?: string, id?: string): SvgLine {
+    let newLine: SvgLine = <SvgLine>document.createElementNS("http://www.w3.org/2000/svg", "line");
+    if (id) {
+      newLine.setAttribute("id", id);
+    }
+    newLine.setAttribute("class", "line");
+    newLine.setAttribute("x1", pointA.x.toString());
+    newLine.setAttribute("y1", pointA.y.toString());
+    newLine.setAttribute("x2", pointB.x.toString());
+    newLine.setAttribute("y2", pointB.y.toString());
+    newLine.setAttribute("stroke", color || "black");
+    const canvas = this.canvas;
+    const line = canvas.appendChild(newLine);
+    return line;
+  }
+
+  /**
    * Returns polygon that is on plane
    */
   public getPolygon(): Polygon {
@@ -205,5 +226,31 @@ export class Canvas {
 
   public stopCreatingPolygon(): void {
     this.creatingPolygon = false;
+  }
+
+  /**
+   * Adds n points at random locations
+   * @param n number of points to add
+   */
+  public addRandomPoints(n: number) {
+    for (let i = 0; i < n; i++) {
+      // 50 is padding around edge where we dont want to add points
+      let x = Math.random() * (this.canvas.clientWidth - 50 - 50) + 50;
+      let y = Math.random() * (this.canvas.clientHeight - 50 - 50) + 50;
+      this.addPoint(x, y);
+    }
+  }
+
+  /**
+   * Gets points of canvas in simple format
+   */
+  public getSimplePoints(): Point[] {
+    const simplePoints = this.points.map((point: SvgCircle) => ({
+      x: Number(point.getAttribute("cx")),
+      y: Number(point.getAttribute("cy")),
+      color: "black",
+    }));
+
+    return simplePoints;
   }
 }

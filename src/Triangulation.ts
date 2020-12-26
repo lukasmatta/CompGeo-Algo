@@ -1,4 +1,4 @@
-import { Canvas, SvgCircle, Polygon } from "./Canvas";
+import { Canvas } from "./Canvas";
 import { Utils } from "./Utils";
 
 export class Triangulation {
@@ -42,7 +42,6 @@ export class Triangulation {
     let currentColor = "yellow";
 
     while (i > 0) {
-      console.log("checking", currentIndex);
       if (points[currentIndex] == pointsSorted[pointsSorted.length - 1]) {
         currentPath = secondPath;
         currentColor = "white";
@@ -96,6 +95,4 @@ export class Triangulation {
   private timer(ms) {
     return new Promise((res) => setTimeout(res, ms));
   }
-
-  private isLineInside(pointA: SvgCircle, pointB: SvgCircle, polygon: Polygon) {}
 }

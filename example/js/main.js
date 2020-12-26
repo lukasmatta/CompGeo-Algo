@@ -43,12 +43,38 @@
     }
 
     function StartPolygon() {
-    document.getElementsByClassName("hint")[0].innerHTML = polygonMessage;
-    svgPlane.startCreatingPolygon();
+        document.getElementsByClassName("hint")[0].innerHTML = polygonMessage;
+        svgPlane.startCreatingPolygon();
+        drawingPolygon = true;
+        document.getElementById("polygon-state").innerHTML = "Stop";
+    }
+
+    function StopPolygon() {
+        document.getElementsByClassName("hint")[0].innerHTML = noPolygonMessage;
+        svgPlane.stopCreatingPolygon();
+        drawingPolygon = false;
+        document.getElementById("polygon-state").innerHTML = "Start";
+    }
+
+    function BuildKDTree() {
+        let kdTree = new svgLibrary.KDTree(svgPlane);
+        kdTree.buildKDTree(svgPlane.getSimplePoints(), 0);
+    }
+
+    function TogglePolygon() {
+        if(drawingPolygon) {
+            StopPolygon();
+        } else {
+            StartPolygon();
+        }
+    }
+
+    function AddRandomPoints() {
+        svgPlane.addRandomPoints(10);
     }
 
     // Just return a value to define the module export.
     // This example returns an object, but the module
     // can return a function as the exported value.
-    return {JarvisMarch, GrahamScan, SweepingLine, ClearCanvas, StartPolygon};
+    return {JarvisMarch, GrahamScan, SweepingLine, ClearCanvas, StartPolygon, AddRandomPoints, StopPolygon, TogglePolygon, BuildKDTree};
 }));
