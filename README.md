@@ -15,7 +15,7 @@ Built for [Computational Geometry Project course](https://is.muni.cz/course/fi/a
 - K-d Tree build algorithm
 - Voronoi Diagram algorithm
 
-## How to use library
+## How to use the library
 
 Include following code in your html file:
 
