@@ -30,6 +30,14 @@ export class Canvas {
     this.canvas.addEventListener("mouseleave", this.endDrag.bind(this));
     this.canvas.addEventListener("dblclick", this.addPointOnClick.bind(this));
     this.canvas.addEventListener("click", this.addPolygonPoint.bind(this));
+    // Test points
+    // this.addPoint(180, 142, "black");
+    // this.addPoint(101, 262, "black");
+    // this.addPoint(288, 191, "black");
+    // this.addPoint(464, 105, "black");
+    // this.addPoint(571, 217, "black");
+    // this.addPoint(498, 296, "black");
+    // this.addPoint(294, 107, "black");
   }
 
   /**
@@ -53,6 +61,7 @@ export class Canvas {
    * @param color color of point
    */
   public addPoint(x: number, y: number, color?: string): SvgCircle {
+    console.log(`this.addPoint(${x}, ${y}, "black")`);
     const circle: SvgCircle = <SvgCircle>document.createElementNS(SVG_NAMESPACE, "circle");
     circle.setAttributeNS(null, "cx", x.toString());
     circle.setAttributeNS(null, "cy", y.toString());
