@@ -33,13 +33,20 @@
           <div>
             <p class="heading">Triangulation</p>
             <button class="waves-effect waves-light btn light-blue darken-2" onclick="$.SweepingLine()">
-              Sweeping Line triangulation
+              Sweeping Line triangulation</button
+            ><br />
+            <button class="waves-effect waves-light btn light-blue darken-2" onclick="$.Delaunay()">
+              Delaunay triangulation
             </button>
           </div>
           <div>
             <p class="heading">KDTree</p>
-            <button class="waves-effect waves-light btn light-blue darken-2" onclick="$.BuildKDTree()">
-              Build KDTree
+            <button class="waves-effect waves-light btn orange darken-2" onclick="$.BuildKDTree()">Build KDTree</button>
+          </div>
+          <div>
+            <p class="heading">Voronoi diagram</p>
+            <button class="waves-effect waves-light btn purple darken-1" onclick="$.Voronoi()">
+              Build Voronoi diagram
             </button>
           </div>
         </div>

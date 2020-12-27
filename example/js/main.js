@@ -38,6 +38,10 @@
     triangulation.SweepingLine();
     }
 
+    function Delaunay() {
+        triangulation.Delaunay();
+    }
+
     function ClearCanvas() {
     svgPlane.clearCanvas();
     }
@@ -61,6 +65,10 @@
         kdTree.buildKDTree(svgPlane.getSimplePoints(), 0);
     }
 
+    function Voronoi() {
+        let voronoi = new svgLibrary.Voronoi(svgPlane);
+    }
+
     function TogglePolygon() {
         if(drawingPolygon) {
             StopPolygon();
@@ -76,5 +84,16 @@
     // Just return a value to define the module export.
     // This example returns an object, but the module
     // can return a function as the exported value.
-    return {JarvisMarch, GrahamScan, SweepingLine, ClearCanvas, StartPolygon, AddRandomPoints, StopPolygon, TogglePolygon, BuildKDTree};
+    return {
+        JarvisMarch, 
+        GrahamScan, 
+        SweepingLine, 
+        ClearCanvas, 
+        StartPolygon, 
+        AddRandomPoints, 
+        StopPolygon, 
+        TogglePolygon, 
+        BuildKDTree, 
+        Delaunay,
+        Voronoi};
 }));

@@ -30,6 +30,14 @@ export class Canvas {
     this.canvas.addEventListener("mouseleave", this.endDrag.bind(this));
     this.canvas.addEventListener("dblclick", this.addPointOnClick.bind(this));
     this.canvas.addEventListener("click", this.addPolygonPoint.bind(this));
+
+    this.addPoint(232, 156, "black");
+    this.addPoint(212, 253, "black");
+
+    this.addPoint(295, 57, "black");
+    this.addPoint(446, 107, "black");
+    this.addPoint(341, 141, "black");
+    this.addPoint(392, 273, "black");
   }
 
   /**
@@ -252,5 +260,21 @@ export class Canvas {
     }));
 
     return simplePoints;
+  }
+
+  /**
+   * Adds circle with with center and given perimeter
+   * @param center
+   * @param r
+   * @param color
+   */
+  public addCircle(center: Point, r: number, color: string = "black") {
+    const circle: SvgCircle = <SvgCircle>document.createElementNS(SVG_NAMESPACE, "circle");
+    circle.setAttributeNS(null, "cx", center.x.toString());
+    circle.setAttributeNS(null, "cy", center.y.toString());
+    circle.setAttributeNS(null, "r", r.toString());
+    circle.setAttributeNS(null, "style", `fill: none; stroke: ${color}; stroke-width: 1px; cursor: move;`);
+    this.canvas.appendChild(circle);
+    return circle;
   }
 }
