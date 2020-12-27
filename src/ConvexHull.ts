@@ -71,21 +71,10 @@ export class ConvexHull {
     this.colorPointsBlack(points);
     let stack: SvgCircle[] = [];
 
-    // Leftmost point (if two points are equally leftmost, than the point that is lower is selected)
-    let leftmostPoint: SvgCircle = points[0];
-
     // Find the leftmost point
-    points.slice(1).forEach((p: SvgCircle) => {
-      if (Number(p.getAttribute("cx")) < Number(leftmostPoint.getAttribute("cx"))) {
-        leftmostPoint = p;
-      }
-
-      if (Number(p.getAttribute("cx")) === Number(leftmostPoint.getAttribute("cx"))) {
-        if (Number(p.getAttribute("cy")) < Number(leftmostPoint.getAttribute("cy"))) {
-          leftmostPoint = p;
-        }
-      }
-    });
+    let leftmostPoint: SvgCircle = points
+      .sort((p1, p2) => Number(p1.getAttribute("cy")) - Number(p2.getAttribute("cy")))
+      .sort((p1, p2) => Number(p1.getAttribute("cx")) - Number(p2.getAttribute("cx")))[0];
 
     // Sort points by the angle they and leftmost point make with x-axis
     points.sort((a, b) => (Utils.isOnLeft(leftmostPoint, a, b) ? -1 : 1));
