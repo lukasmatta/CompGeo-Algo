@@ -30,14 +30,6 @@ export class Canvas {
     this.canvas.addEventListener("mouseleave", this.endDrag.bind(this));
     this.canvas.addEventListener("dblclick", this.addPointOnClick.bind(this));
     this.canvas.addEventListener("click", this.addPolygonPoint.bind(this));
-
-    this.addPoint(232, 156, "black");
-    this.addPoint(212, 253, "black");
-
-    this.addPoint(295, 57, "black");
-    this.addPoint(446, 107, "black");
-    this.addPoint(341, 141, "black");
-    this.addPoint(392, 273, "black");
   }
 
   /**

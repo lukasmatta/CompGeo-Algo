@@ -1,5 +1,5 @@
 {
-  "name": "svg-library",
+  "name": "compgeo-algo",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/svg-library.min.js",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/lukasmatta/pa093-framework.git"
   },
-  "author": "Lukáš MAtta",
+  "author": "Lukáš Matta",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lukasmatta/pa093-framework/issues"
