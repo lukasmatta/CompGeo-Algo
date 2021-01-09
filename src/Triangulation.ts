@@ -44,13 +44,31 @@ export class Triangulation {
     let currentIndex = firstIndex;
     let firstPath = [];
     let secondPath = [];
-    let currentPath = firstPath;
-    let currentColor = "yellow";
+    let currentPath;
+    let otherPath;
+    let currentColor;
+    let otherColor;
+
+    // Make sure first path (yellow one) is always on the left
+    // Next point is on the left of the lowest one
+    if (Number(points[firstIndex].getAttribute("cx")) < Number(pointsSorted[0].getAttribute("cx"))) {
+      currentPath = firstPath;
+      otherPath = secondPath;
+      currentColor = "yellow";
+      otherColor = "white";
+
+      // Next point is on the right of the lowest one
+    } else {
+      currentPath = secondPath;
+      otherPath = firstPath;
+      currentColor = "white";
+      otherColor = "yellow";
+    }
 
     while (i > 0) {
       if (points[currentIndex] == pointsSorted[pointsSorted.length - 1]) {
-        currentPath = secondPath;
-        currentColor = "white";
+        currentPath = otherPath;
+        currentColor = otherColor;
       } else {
         points[currentIndex].style.fill = currentColor;
         currentPath.push(points[currentIndex]);
